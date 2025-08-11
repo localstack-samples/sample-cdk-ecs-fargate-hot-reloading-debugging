@@ -18,7 +18,7 @@ This sample demonstrates how to deploy a containerized application on AWS Fargat
 
 The following diagram shows the architecture that this sample application builds and deploys:
 
-![Solution](./docs/img/solution-diags.drawio.png "Solution")
+![Architecture](./images/architecture.png)
 
 -   Virtual Private Cloud (VPC) that sets an isolated network environment to host AWS resources securely.
 -   [Elastic Container Service (ECS)](https://docs.localstack.cloud/user-guide/aws/ecs/) to manage the deployment and scaling of containerized applications using the Fargate launch type.
