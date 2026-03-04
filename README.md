@@ -26,6 +26,7 @@ The following diagram shows the architecture that this sample application builds
 
 ## Prerequisites
 
+- A valid [LocalStack for AWS license](https://localstack.cloud/pricing). Your license provides a `LOCALSTACK_AUTH_TOKEN` to activate LocalStack.
 - [`localstack` CLI](https://docs.localstack.cloud/getting-started/installation/#localstack-cli) with a [`LOCALSTACK_AUTH_TOKEN`](https://docs.localstack.cloud/getting-started/auth-token/).
 - [AWS CLI](https://docs.localstack.cloud/user-guide/integrations/aws-cli/) with the [`awslocal` wrapper](https://docs.localstack.cloud/user-guide/integrations/aws-cli/#localstack-aws-cli-awslocal).
 - [CDK](https://docs.localstack.cloud/user-guide/integrations/aws-cdk/) with the [`cdklocal`](https://www.npmjs.com/package/aws-cdk-local) wrapper.
