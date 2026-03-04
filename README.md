@@ -31,7 +31,7 @@ The following diagram shows the architecture that this sample application builds
 - [AWS CLI](https://docs.localstack.cloud/user-guide/integrations/aws-cli/) with the [`awslocal` wrapper](https://docs.localstack.cloud/user-guide/integrations/aws-cli/#localstack-aws-cli-awslocal).
 - [CDK](https://docs.localstack.cloud/user-guide/integrations/aws-cdk/) with the [`cdklocal`](https://www.npmjs.com/package/aws-cdk-local) wrapper.
 - [Node.js](https://nodejs.org/en/download/)
-- [`make`](https://www.gnu.org/software/make/) (**optional**, but recommended for running the sample application)
+- [`make`](https://www.gnu.org/software/make/) (**optional**, but recommended for running the sample app)
 
 ## Installation
 
