@@ -27,9 +27,9 @@ The following diagram shows the architecture that this sample application builds
 ## Prerequisites
 
 - A valid [LocalStack for AWS license](https://localstack.cloud/pricing). Your license provides a [`LOCALSTACK_AUTH_TOKEN`](https://docs.localstack.cloud/getting-started/auth-token/) to activate LocalStack.
-- [`localstack` CLI](https://docs.localstack.cloud/getting-started/installation/#localstack-cli).
-- [AWS CLI](https://docs.localstack.cloud/user-guide/integrations/aws-cli/) with the [`awslocal` wrapper](https://docs.localstack.cloud/user-guide/integrations/aws-cli/#localstack-aws-cli-awslocal).
-- [CDK](https://docs.localstack.cloud/user-guide/integrations/aws-cdk/) with the [`cdklocal`](https://www.npmjs.com/package/aws-cdk-local) wrapper.
+- [`lstk` CLI](https://docs.localstack.cloud/aws/tooling/lstk/) to manage the LocalStack container lifecycle.
+- [AWS CLI](https://docs.localstack.cloud/user-guide/integrations/aws-cli/) with the [`lstk aws` proxy](https://docs.localstack.cloud/aws/tooling/lstk/).
+- [CDK](https://docs.localstack.cloud/user-guide/integrations/aws-cdk/) with the [`lstk cdk` proxy](https://docs.localstack.cloud/aws/tooling/lstk/).
 - [Node.js](https://nodejs.org/en/download/)
 - [`make`](https://www.gnu.org/software/make/) (**optional**, but recommended for running the sample app)
 
@@ -60,8 +60,8 @@ make install
 Start LocalStack with the `LOCALSTACK_AUTH_TOKEN` pre-configured:
 
 ```shell
-localstack auth set-token <your-auth-token>
-localstack start
+export LOCALSTACK_AUTH_TOKEN=<your-auth-token>
+lstk start
 ```
 
 To deploy the sample application, run the following command:
@@ -110,7 +110,7 @@ make test
 
 In this sample, ECS code-mounting is implemented using Docker bind mounts to enable real-time sync between your local development environment and the ECS task running in LocalStack.
 
-The CDK configuration defines a volume that maps a local source directory (`src/app`) to a container path (`/app`) inside the ECS task. When deployed via `cdklocal`, LocalStack translates this into a Docker bind mount.
+The CDK configuration defines a volume that maps a local source directory (`src/app`) to a container path (`/app`) inside the ECS task. When deployed via `lstk cdk`, LocalStack translates this into a Docker bind mount.
 
 To make use of this:
 
@@ -151,7 +151,7 @@ This sample application demonstrates how to provision, deploy, and test a contai
 -   Building and pushing Docker images to Amazon ECR, and integrating them into ECS task definitions.    
 -   Configuring Visual Studio Code for remote debugging of ECS tasks running in LocalStack.
 -   Using bind mounts with ECS to mount code from the host filesystem into the ECS container for quick hot-reloads.
--   Utilizing `cdklocal` and `awslocal` to streamline local deployment and testing workflows.
+-   Utilizing `lstk cdk` and `lstk aws` to streamline local deployment and testing workflows.
 
 ## Learn More
 

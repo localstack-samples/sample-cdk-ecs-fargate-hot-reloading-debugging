@@ -17,9 +17,8 @@ check:			## Check if all required prerequisites are installed
 	@command -v docker > /dev/null 2>&1 || { echo "Docker is not installed. Please install Docker and try again."; exit 1; }
 	@command -v node > /dev/null 2>&1 || { echo "Node.js is not installed. Please install Node.js and try again."; exit 1; }
 	@command -v aws > /dev/null 2>&1 || { echo "AWS CLI is not installed. Please install AWS CLI and try again."; exit 1; }
-	@command -v localstack > /dev/null 2>&1 || { echo "LocalStack is not installed. Please install LocalStack and try again."; exit 1; }
 	@command -v cdk > /dev/null 2>&1 || { echo "CDK is not installed. Please install CDK and try again."; exit 1; }
-	@command -v cdklocal > /dev/null 2>&1 || { echo "cdklocal is not installed. Please install cdklocal and try again."; exit 1; }
+	@command -v lstk > /dev/null 2>&1 || { echo "lstk is not installed. Please install lstk and try again."; exit 1; }
 	@echo "All required prerequisites are available."
 
 install:		## Install NPM dependencies
@@ -37,14 +36,14 @@ install:		## Install NPM dependencies
 	fi
 
 deploy:			## Bootstrap and deploy the CDK app on LocalStack
-	${CDIR}; cdklocal bootstrap; cdklocal deploy --outputs-file ./output.json --json --require-approval never
+	${CDIR}; lstk cdk bootstrap; lstk cdk deploy --outputs-file ./output.json --json --require-approval never
 
 deploy-aws:		## Bootstrap and deploy the CDK app on AWS
 	${CDIR}; cdk bootstrap && \
 		cdk deploy --outputs-file ./output.json --json
 
 destroy:		## Destroy the deployed CDK stack on LocalStack
-	${CDIR}; cdklocal destroy
+	${CDIR}; lstk cdk destroy
 
 destroy-aws:	## Destroy the deployed CDK stack on AWS
 	${CDIR}; cdk destroy
@@ -64,20 +63,14 @@ curl-aws:		## Curl the AWS service load balancer
 start:			## Start LocalStack
 	@echo "Starting LocalStack..."
 	@test -n "${LOCALSTACK_AUTH_TOKEN}" || (echo "LOCALSTACK_AUTH_TOKEN is not set. Find your token at https://app.localstack.cloud/workspace/auth-token"; exit 1)
-	@LOCALSTACK_AUTH_TOKEN=$(LOCALSTACK_AUTH_TOKEN) localstack start -d
+	@LOCALSTACK_AUTH_TOKEN=$(LOCALSTACK_AUTH_TOKEN) lstk start --non-interactive
 	@echo "LocalStack started successfully."
 
 stop:			## Stop LocalStack
-	@echo "Stopping LocalStack..."
-	@localstack stop
-	@echo "LocalStack stopped successfully."
-
-ready:			## Make sure the LocalStack container is up
-		@echo Waiting on the LocalStack container...
-		@localstack wait -t 30 && echo LocalStack is ready to use! || (echo Gave up waiting on LocalStack, exiting. && exit 1)
+	@lstk stop --non-interactive
 
 logs:			## Save the logs in a separate file
-		@localstack logs > logs.txt
+		@lstk logs --non-interactive > logs.txt
 
 PKG_SUB_DIRS := $(dir $(shell find . -type d -name node_modules -prune -o -type d -name "venv*" -prune -o -type f -name package.json -print))
 

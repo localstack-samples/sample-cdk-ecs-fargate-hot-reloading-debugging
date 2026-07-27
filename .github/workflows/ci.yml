@@ -36,8 +36,8 @@ jobs:
 
       - name: Install CDK
         run: |
-          npm install -g aws-cdk-local aws-cdk
-          cdklocal --version
+          npm install -g @localstack/lstk aws-cdk
+          lstk cdk --version
 
       - name: Install dependencies
         run: make install
@@ -50,7 +50,7 @@ jobs:
 
       - name: Show LocalStack logs
         if: always()
-        run: localstack logs
+        run: lstk logs --non-interactive
 
       - name: Send a Slack notification
         if: failure() || github.event_name != 'pull_request'
